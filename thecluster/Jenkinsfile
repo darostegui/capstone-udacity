@@ -2,18 +2,20 @@ pipeline {
 	agent any
 	stages {
 
-		stage('Create the kubernetes cluster') {
+		stage('Create the Capstone kubernetes cluster') {
 			steps {
 				withAWS(region:'us-east-1', credentials:'aws-static') {
 					sh '''
 						eksctl create cluster \
 						--name thecluster \
-						--version 1.13 \
-						--nodegroup-name standard-workers \
+						--version 1.16 \
+						--nodegroup-name capstone-workers \
 						--node-type t2.small \
 						--nodes 2 \
 						--nodes-min 1 \
 						--nodes-max 3 \
+						--ssh-access \
+						--ssh-public-key /home/ubuntu/MyKeyPair.pub \
 						--node-ami auto \
 						--region us-east-1 \
 						--zones us-east-1a \
