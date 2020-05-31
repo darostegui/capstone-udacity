@@ -9,7 +9,7 @@ pipeline {
 
     stage('Build Blue & Green Docker Image') {
       steps {
-        withCredentials(bindings: [[$class: 'UsernamePasswordMultiBinding', credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD']]) {
+        withCredentials(bindings: [[$class: 'UsernamePasswordMultiBinding', credentialsId: 'docker-hub-credentials', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD']]) {
           sh '''
 						docker build -t globalint/capstoneblue -f blue/Dockerfile .
             docker build -t globalint/capstonegreen -f green/Dockerfile .
@@ -21,7 +21,7 @@ pipeline {
 
     stage('Push Image(s) To Dockerhub') {
       steps {
-        withCredentials(bindings: [[$class: 'UsernamePasswordMultiBinding', credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD']]) {
+        withCredentials(bindings: [[$class: 'UsernamePasswordMultiBinding', credentialsId: 'docker-hub-credentials', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD']]) {
           sh '''
 						docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
 						docker push globalint/capstoneblue
