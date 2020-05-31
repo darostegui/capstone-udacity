@@ -5,5 +5,5 @@ FROM nginx
 RUN rm /usr/share/nginx/html/index.html
 
 ## Step 2:
-COPY content /usr/share/nginx/html
+COPY green/content /usr/share/nginx/html
 # COPY conf /etc/nginx
